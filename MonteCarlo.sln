@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonteCarlo", "MonteCarlo\Mo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonteCarlo-OpenMP", "MonteCarlo-OpenMP\MonteCarlo-OpenMP.vcxproj", "{D6F59EF4-B03A-4B97-9FDC-72DAFC22BE49}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonteCarlo-OpenMPI", "MonteCarlo-OpenMPI\MonteCarlo-OpenMPI.vcxproj", "{0D62D131-5FA3-4AF5-A835-1C7A242448D9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonteCarlo-CUDA", "MonteCarlo-CUDA\MonteCarlo-CUDA.vcxproj", "{DD192ACF-707E-4F3E-97D2-256265A5A02A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +35,22 @@ Global
 		{D6F59EF4-B03A-4B97-9FDC-72DAFC22BE49}.Release|x64.Build.0 = Release|x64
 		{D6F59EF4-B03A-4B97-9FDC-72DAFC22BE49}.Release|x86.ActiveCfg = Release|Win32
 		{D6F59EF4-B03A-4B97-9FDC-72DAFC22BE49}.Release|x86.Build.0 = Release|Win32
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Debug|x64.ActiveCfg = Debug|x64
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Debug|x64.Build.0 = Debug|x64
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Debug|x86.ActiveCfg = Debug|Win32
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Debug|x86.Build.0 = Debug|Win32
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Release|x64.ActiveCfg = Release|x64
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Release|x64.Build.0 = Release|x64
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Release|x86.ActiveCfg = Release|Win32
+		{0D62D131-5FA3-4AF5-A835-1C7A242448D9}.Release|x86.Build.0 = Release|Win32
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Debug|x64.ActiveCfg = Debug|x64
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Debug|x64.Build.0 = Debug|x64
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Debug|x86.Build.0 = Debug|Win32
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Release|x64.ActiveCfg = Release|x64
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Release|x64.Build.0 = Release|x64
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Release|x86.ActiveCfg = Release|Win32
+		{DD192ACF-707E-4F3E-97D2-256265A5A02A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
