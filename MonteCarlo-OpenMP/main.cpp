@@ -35,7 +35,7 @@ double generateRandom()
 
 MonteCarloResult monteCarlo()
 {
-	const std::int64_t POINTS = 1e9;
+	const std::int64_t POINTS = 1e10;
 	std::uint64_t pointsInCircle{};
 	std::int64_t index{};
 

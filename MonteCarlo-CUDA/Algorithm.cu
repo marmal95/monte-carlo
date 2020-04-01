@@ -3,7 +3,7 @@
 #include <thrust/device_vector.h>
 #include <thrust/host_vector.h>
 
-const std::size_t TOTAL_POINTS = 1e9;
+const std::size_t TOTAL_POINTS = 1e10;
 const std::size_t THREADS_NUM = 32;
 const std::size_t BLOCKS_NUM = 640;
 const std::size_t THREAD_ITERATIONS = TOTAL_POINTS / THREADS_NUM / BLOCKS_NUM;
@@ -47,5 +47,5 @@ MonteCarloResult monteCarlo()
 	thrust::copy(blocksCount_dev.begin(), blocksCount_dev.end(), blocksCount.begin());
 
 	const auto pointsInCircle = std::accumulate(blocksCount.cbegin(), blocksCount.cend(), std::size_t{});
-	return { pointsInCircle, TOTAL_POINTS };
+	return { pointsInCircle, THREADS_NUM * BLOCKS_NUM * THREAD_ITERATIONS };
 }

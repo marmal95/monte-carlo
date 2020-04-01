@@ -58,7 +58,7 @@ int main()
 	MonteCarloResult finalResult{};
 
 	const auto duration = runWithTimeMeasurementCpu([&]() {
-		const std::size_t POINTS = 1e9;
+		const std::size_t POINTS = 1e10;
 		const std::size_t pointsPerProcess = POINTS / MPI::getWorldSize();
 
 		const auto processMonteCarloResult = monteCarlo(pointsPerProcess);

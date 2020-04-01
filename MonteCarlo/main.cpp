@@ -38,7 +38,7 @@ MonteCarloResult monteCarlo()
 	std::mt19937 randomEngine(rd());
 	std::uniform_real_distribution<double> dist(0, std::nextafter(1, std::numeric_limits<double>::max()));
 
-	const std::size_t POINTS = 1e9;
+	const std::size_t POINTS = 1e10;
 	std::size_t pointsInCircle{};
 
 	static std::size_t counter{};
