@@ -1,11 +1,11 @@
-﻿# Monto Carlo
+﻿# Monte Carlo
 
 The project contains sequential and different parallel implementations of **Monte Carlo - π approximation** algorithm.<br />
 The project was created for the needs of master's thesis of Computer Science studies.<br/>
 The aim of the project was to compare performance of sequential and parallel implementations, depending on threads and processes number used for computing, with the use of different approaches and technologies.
 
 ## Functionality
-π value is approximated using [Monto Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method).
+π value is approximated using [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method).
 Each implementation contains **POINTS** constant which determines a number of random points to be generated to approximate π value.
 
 ## Technologies
@@ -18,7 +18,7 @@ Each implementation contains **POINTS** constant which determines a number of ra
 
 ## Implementations
 
-The project contains a few **Monto Carlo method** implementations:
+The project contains a few **Monte Carlo method** implementations:
 * Sequential implementation - using pure C++
 * Multithreaded implementation with the use of **OpenMP**
 * Parallel implementation with the use of **OpenMPI**
