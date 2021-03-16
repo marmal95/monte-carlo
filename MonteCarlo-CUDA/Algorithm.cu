@@ -1,51 +1,54 @@
 #include "Algorithm.hpp"
 #include <numeric>
+#include <device_launch_parameters.h>
+#include <cuda_runtime.h>
 #include <thrust/device_vector.h>
 #include <thrust/host_vector.h>
 
-const std::size_t TOTAL_POINTS = 1e10;
-const std::size_t THREADS_NUM = 32;
-const std::size_t BLOCKS_NUM = 640;
-const std::size_t THREAD_ITERATIONS = TOTAL_POINTS / THREADS_NUM / BLOCKS_NUM;
+
+const std::size_t POINTS = 10'000'000'000;
+const std::size_t THREADS_PER_BLOCK = 32;
+const std::size_t NUM_BLOCKS = 640;
+const std::size_t THREAD_ITERATIONS = POINTS / THREADS_PER_BLOCK / NUM_BLOCKS;
 
 
 __global__ void monteCarlo_cuda(std::size_t* totals)
 {
-	__shared__ std::size_t counter[THREADS_NUM];
+    __shared__ std::size_t counter[THREADS_PER_BLOCK];
 
-	int tid = threadIdx.x + blockIdx.x * blockDim.x;
-	counter[threadIdx.x] = 0;
+    int tid = threadIdx.x + blockIdx.x * blockDim.x;
+    counter[threadIdx.x] = 0;
 
-	curandState_t rng;
-	curand_init(clock64(), tid, 0, &rng);
+    curandState_t rng;
+    curand_init(clock64(), tid, 0, &rng);
 
-	for (int i = 0; i < THREAD_ITERATIONS; i++)
-	{
-		float x = curand_uniform(&rng);
-		float y = curand_uniform(&rng);
-		counter[threadIdx.x] += 1 - int(x * x + y * y);
-	}
+    for (int i = 0; i < THREAD_ITERATIONS; i++)
+    {
+        float x = curand_uniform(&rng);
+        float y = curand_uniform(&rng);
+        counter[threadIdx.x] += 1 - int(x * x + y * y);
+    }
 
-	__syncthreads();
+    __syncthreads();
 
-	if (threadIdx.x == 0)
-	{
-		totals[blockIdx.x] = 0;
-		for (int i = 0; i < THREADS_NUM; i++)
-		{
-			totals[blockIdx.x] += counter[i];
-		}
-	}
+    if (threadIdx.x == 0)
+    {
+        totals[blockIdx.x] = 0;
+        for (int i = 0; i < THREADS_PER_BLOCK; i++)
+        {
+            totals[blockIdx.x] += counter[i];
+        }
+    }
 }
 
 MonteCarloResult monteCarlo()
 {
-	thrust::host_vector<std::size_t> blocksCount(BLOCKS_NUM);
-	thrust::device_vector<std::size_t> blocksCount_dev(BLOCKS_NUM);
+    thrust::host_vector<std::size_t> blocksCount(NUM_BLOCKS);
+    thrust::device_vector<std::size_t> blocksCount_dev(NUM_BLOCKS);
 
-	monteCarlo_cuda << <BLOCKS_NUM, THREADS_NUM >> > (blocksCount_dev.data().get());
-	thrust::copy(blocksCount_dev.begin(), blocksCount_dev.end(), blocksCount.begin());
+    monteCarlo_cuda<<<NUM_BLOCKS, THREADS_PER_BLOCK >>>(blocksCount_dev.data().get());
+    thrust::copy(blocksCount_dev.begin(), blocksCount_dev.end(), blocksCount.begin());
 
-	const auto pointsInCircle = std::accumulate(blocksCount.cbegin(), blocksCount.cend(), std::size_t{});
-	return { pointsInCircle, THREADS_NUM * BLOCKS_NUM * THREAD_ITERATIONS };
+    const auto pointsInCircle = std::accumulate(blocksCount.cbegin(), blocksCount.cend(), std::size_t{});
+    return { pointsInCircle, THREADS_PER_BLOCK * NUM_BLOCKS * THREAD_ITERATIONS };
 }
